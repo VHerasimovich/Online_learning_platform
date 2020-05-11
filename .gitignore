@@ -132,3 +132,4 @@ dmypy.json
 .pyre/
 
 admin.txt
+test_user.txt

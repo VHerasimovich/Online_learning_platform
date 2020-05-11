@@ -1,10 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}Logged out{% endblock %}
+
+{% block content %}
+    <h1>Logged out</h1>
+    <div class="module">
+        <p>You have been successfully logged out.
+            You can <a href="{% url login %}">log-in again</a>.</p>
+    </div>
+{% endblock %}

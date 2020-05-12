@@ -98,7 +98,7 @@ class ContentCreateUpdateView(TemplateResponseMixin, View):
         self.module = get_object_or_404(Module, id=module_id, course__owner=request.user)
         self.model = self.get_model(model_name)
         if id:
-            self.odj = get_object_or_404(self.model,
+            self.obj = get_object_or_404(self.model,
                                          id=id,
                                          owner=request.user)
         return super(ContentCreateUpdateView, self).dispatch(request, module_id, model_name, id)
@@ -114,7 +114,7 @@ class ContentCreateUpdateView(TemplateResponseMixin, View):
             obj.owner = request.user
             obj.save()
             if not id:
-                Content.objects.creare(module=self.module, item=obj)
+                Content.objects.create(module=self.module, item=obj)
             return redirect('module_content_list', self.module.id)
         return self.render_to_response({'form': form, 'object': self.obj})
 

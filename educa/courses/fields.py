@@ -1,3 +1,5 @@
+# hand maDe field type for object number assignment and sorting
+
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -8,11 +10,11 @@ class OrderField(models.PositiveIntegerField):
         super(OrderField, self).__init__(*args, **kwargs)
 
     def pre_save(self, model_instance, add):
-        if getattr(model_instance, self.attname) is None:
+        if getattr(model_instance, self.attname) is None:   # self.attname -- filed name in model
             try:
                 queryset = self.model.objects.all()
                 if self.for_fields:
-                    query = {field: getattr(model_instance, field) for field in self.for_fields}
+                    query = {field: getattr(model_instance, field) for field in self.for_fields}    # current object fields
                     queryset = queryset.filter(**query)
                 last_item = queryset.latest(self.attname)
                 value = last_item.order + 1

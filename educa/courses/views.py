@@ -139,6 +139,7 @@ class ModuleContentListView(TemplateResponseMixin, View):
         return self.render_to_response({'module': module})
 
 
+# handler for module order change via drag-n-drop
 class ModuleOrderView(CsrfExemptMixin, JsonRequestResponseMixin, View):
     def post(self, request):
         for id, order in self.request_json.items():
@@ -147,6 +148,7 @@ class ModuleOrderView(CsrfExemptMixin, JsonRequestResponseMixin, View):
         return self.render_json_response({'saved': 'OK'})
 
 
+# handler for content order change via drag-n-drop
 class ContentOrderView(CsrfExemptMixin, JsonRequestResponseMixin, View):
     def post(self, request):
         for id, order in self.request_json.items():

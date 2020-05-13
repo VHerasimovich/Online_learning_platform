@@ -1,3 +1,5 @@
+# this filter can be used in the templates to get model name: "object|model_name"
+
 from django import template
 
 register = template.Library()

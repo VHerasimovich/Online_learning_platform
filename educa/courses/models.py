@@ -17,6 +17,7 @@ class Subject(models.Model):
 
 
 class Course(models.Model):
+    # owner -- teacher, course creator
     owner = models.ForeignKey(User, related_name='course_created', on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, related_name='courses', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
@@ -32,10 +33,12 @@ class Course(models.Model):
 
 
 class Module(models.Model):
+    # each course -- several modules
     course = models.ForeignKey(Course, related_name='modules', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     order = OrderField(blank=True, for_fields=['course'])
+    # for_fields=['course'] -- number assignment inside one course
 
     class Meta:
         ordering = ['order']
@@ -45,6 +48,7 @@ class Module(models.Model):
 
 
 class Content(models.Model):
+    # module consist of many objects of some type (content)
     module = models.ForeignKey(Module, related_name='contents', on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType,
                                      on_delete=models.CASCADE,
@@ -54,14 +58,16 @@ class Content(models.Model):
                                          'image',
                                          'file'
                                      )})
-    object_id = models.PositiveIntegerField()
-    item = GenericForeignKey('content_type', 'object_id')
+    object_id = models.PositiveIntegerField()   # connected object id
+    item = GenericForeignKey('content_type', 'object_id')   # data generalization. Not in the DB
     order = OrderField(blank=True, for_fields=['module'])
+    # for_fields=['module'] -- content number assignment inside module
 
     class Meta:
         ordering = ['order']
 
 
+# abstract model class
 class ItemBase(models.Model):
     owner = models.ForeignKey(User, related_name='%(class)s_related', on_delete=models.CASCADE)
     title = models.CharField(max_length=250)
@@ -69,7 +75,7 @@ class ItemBase(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        abstract = True
+        abstract = True    # abstract base class inheritance
 
     def __str__(self):
         return self.title

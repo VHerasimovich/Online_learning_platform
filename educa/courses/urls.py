@@ -32,7 +32,7 @@ urlpatterns = [
     path('module/order/',
          views.ModuleOrderView.as_view(),
          name='module_order'),
-    path('content/order?',
+    path('content/order/',
          views.ContentOrderView.as_view(),
          name='content_order'),
     path('subject/<slug:subject>/',

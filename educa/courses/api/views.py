@@ -8,6 +8,6 @@ class SubjectListView(generics.ListAPIView):
     serializer_class = SubjectSerializer
 
 
-class SubjectDerailView(generics.RetrieveAPIView):
+class SubjectDetailView(generics.RetrieveAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer

@@ -9,6 +9,7 @@ class SubjectSerializer(serializers.ModelSerializer):
 
 
 class ModuleSerializer(serializers.ModelSerializer):
+    # class for nested module list in the course serializer
     class Meta:
         model = Module
         fields = ['order', 'title', 'description']

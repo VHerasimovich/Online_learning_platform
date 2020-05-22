@@ -34,6 +34,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Email registration configuration
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mail.box.for.experiments@gmail.com'
+EMAIL_HOST_PASSWORD = 'nebula_st@rs'
+EMAIL_PORT = 587
 
 # Application definition
 

@@ -18,8 +18,10 @@ from .tokens import account_activation_token
 from courses.models import Course
 
 
-def signup(request):
-    if request.method == 'POST':
+class StudentRegistrationView(CreateView):
+    template_name = 'signup.html'
+
+    def post(self, request, *args, **kwargs):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -37,9 +39,11 @@ def signup(request):
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
             return HttpResponse('Please, confirm your email address!')
-    else:
+        return render(request, 'signup.html', {'form': form})
+
+    def get(self, request, *args, **kwargs):
         form = SignupForm()
-    return render(request, 'signup.html', {'form': form})
+        return render(request, 'signup.html', {'form': form})
 
 
 def activate(request, uidb64, token):
@@ -55,20 +59,6 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you for confirmation!')
     else:
         return HttpResponse('Wrong link!')
-
-# class StudentRegistrationView(CreateView):
-#     template_name = 'students/student/registration.html'
-#     form_class = UserCreationForm
-#     success_url = reverse_lazy('student_course_list')
-#
-#     def form_valid(self, form):
-#         # method will run if form validation is success
-#         result = super(StudentRegistrationView, self).form_valid(form)
-#         cd = form.cleaned_data
-#         user = authenticate(username=cd['username'],
-#                             password=cd['password1'])
-#         login(self.request, user)
-#         return result
 
 
 class StudentEnrollCourseView(LoginRequiredMixin, FormView):
